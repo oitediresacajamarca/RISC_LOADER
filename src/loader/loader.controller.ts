@@ -38,11 +38,15 @@ export class LoaderController {
     CargarReportePlanoAnual(@Param('anio') anio: number) {
         let mes = 1
         while (mes <= 12) {
+            this.loaders.DescargarReportePlano(mes, anio,2)
+            this.loaders.DescargarReportePlano(mes, anio,5)
+            this.loaders.DescargarReportePlano(mes, anio,7)
             this.loaders.DescargarReportePlano(mes, anio,8)
+
             mes = mes + 1
         }
 
-        return 'personal cargado'
+        return 'REPORTE PLANO CARGADO'+anio
 
     }
 
