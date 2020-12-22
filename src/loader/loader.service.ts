@@ -93,25 +93,25 @@ export class LoaderService {
         FECHA_INICIO_PERIODO.setUTCDate(1)
         FECHA_INICIO_PERIODO.setUTCMonth(mes - 1)
         FECHA_INICIO_PERIODO.setUTCFullYear(anio)
-        let FECHA_FIN_PERIODO = new Date()
 
-        if(mes!=FECHA_INICIO_PERIODO.getMonth()){
-            FECHA_FIN_PERIODO.setUTCDate(FECHA_FIN_PERIODO.getUTCDate() - 1)
-
-        }else{
      
+        let FECHA_FIN_PERIODO = new Date()
         FECHA_FIN_PERIODO.setUTCMonth(FECHA_INICIO_PERIODO.getMonth() + 2)
         FECHA_FIN_PERIODO.setUTCDate(1)
         FECHA_FIN_PERIODO.setUTCDate(FECHA_FIN_PERIODO.getUTCDate() - 1)
 
         FECHA_FIN_PERIODO.setUTCFullYear(anio)
-    }
+
+        if(mes==(new Date()).getMonth()+1){
+            FECHA_FIN_PERIODO = new Date()
+            FECHA_FIN_PERIODO.setUTCDate(FECHA_FIN_PERIODO.getUTCDate() - 1)
+        }
 
         let FECHA_INICIO_PERIODO_FORMAT = FECHA_INICIO_PERIODO.getUTCFullYear() * 10000 + (FECHA_INICIO_PERIODO.getUTCMonth() + 1) * 100 + FECHA_INICIO_PERIODO.getUTCDate()
         let FECHA_FIN_PERIODO_FORMAT = FECHA_FIN_PERIODO.getUTCFullYear() * 10000 + (FECHA_FIN_PERIODO.getUTCMonth() + 1) * 100 + FECHA_FIN_PERIODO.getUTCDate()
 
-        console.log(FECHA_INICIO_PERIODO_FORMAT)
-        console.log(FECHA_FIN_PERIODO_FORMAT)
+        console.log(FECHA_INICIO_PERIODO_FORMAT+' hasta '+FECHA_FIN_PERIODO_FORMAT)
+    
 
 
         fetch("https://wsalud.minsa.gob.pe/reporteshis/his/NominalTramaNuevo.aspx?parametro=7-7-----20201123-20201123", {
