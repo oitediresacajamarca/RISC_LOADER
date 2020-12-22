@@ -29,7 +29,10 @@ export class LoaderController {
 
     @Get('reporte_plano/:anio/:mes')
     CargarReportePlanoPeriodo(@Param('anio') anio: number, @Param('mes') mes: number) {
+        this.loaders.DescargarReportePlano(mes, anio,7)
+        this.loaders.DescargarReportePlano(mes, anio,2)
         this.loaders.DescargarReportePlano(mes, anio,5)
+        this.loaders.DescargarReportePlano(mes, anio,8)
         return 'personal cargado'
 
     }
@@ -62,6 +65,13 @@ export class LoaderController {
     async CargarMaestrosPaciente() {
         const res= await this.loaders.cargarMaestroPacienteTodosPuntosDigitacion()
         return res
+
+    }
+    
+    @Get('listar_puntos')
+    async ListarPuntosDigitacion() {
+        let res:any[]= await this.loaders.CargarPuntosDigitacionHisMinsa()
+        return {cantidad:res.length}
 
     }
 }

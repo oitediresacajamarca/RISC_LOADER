@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { PuntoDigitacionHisminsa } from './interfaces/punto-digitacion-hisminsa.interface';
 const fs = require('fs')
 const fetch = require('node-fetch');
+const dot=require('dotenv').config()
 
 @Injectable()
 export class LoaderService {
 
 
-    RUTA_CARGAR='E:/DIRESA/CARGA_HIS_MINSA'
+    RUTA_CARGAR=process.env.RUTA
 
 
 
@@ -47,6 +48,7 @@ export class LoaderService {
 
     }
     DesacargarMaestroRegistradorRegional() {
+        console.log(this.RUTA_CARGAR)
 
         let FECHAACTUAL = new Date()
         console.log(FECHAACTUAL.getFullYear() * 10000 + (FECHAACTUAL.getMonth() + 1) * 100 + FECHAACTUAL.getDate())
@@ -83,6 +85,7 @@ export class LoaderService {
 
 
     DescargarReportePlano(mes: number, anio: number, sector: number) {
+      
         const rpt = fs.createWriteStream(this.RUTA_CARGAR+'/TMP_REPORTES_PLANOS/TMP_REPORTES_PLANOS/REPORTE_PLANO_' + mes + '_' + anio + '_' + sector + '.csv');
 
         let FECHA_INICIO_PERIODO = new Date()
@@ -90,13 +93,19 @@ export class LoaderService {
         FECHA_INICIO_PERIODO.setUTCDate(1)
         FECHA_INICIO_PERIODO.setUTCMonth(mes - 1)
         FECHA_INICIO_PERIODO.setUTCFullYear(anio)
-
         let FECHA_FIN_PERIODO = new Date()
+
+        if(mes!=FECHA_INICIO_PERIODO.getMonth()){
+            FECHA_FIN_PERIODO.setUTCDate(FECHA_FIN_PERIODO.getUTCDate() - 1)
+
+        }else{
+     
         FECHA_FIN_PERIODO.setUTCMonth(FECHA_INICIO_PERIODO.getMonth() + 2)
         FECHA_FIN_PERIODO.setUTCDate(1)
         FECHA_FIN_PERIODO.setUTCDate(FECHA_FIN_PERIODO.getUTCDate() - 1)
 
         FECHA_FIN_PERIODO.setUTCFullYear(anio)
+    }
 
         let FECHA_INICIO_PERIODO_FORMAT = FECHA_INICIO_PERIODO.getUTCFullYear() * 10000 + (FECHA_INICIO_PERIODO.getUTCMonth() + 1) * 100 + FECHA_INICIO_PERIODO.getUTCDate()
         let FECHA_FIN_PERIODO_FORMAT = FECHA_FIN_PERIODO.getUTCFullYear() * 10000 + (FECHA_FIN_PERIODO.getUTCMonth() + 1) * 100 + FECHA_FIN_PERIODO.getUTCDate()
