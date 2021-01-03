@@ -74,4 +74,14 @@ export class LoaderController {
         return {cantidad:res.length}
 
     }
+
+    @Get('cargar_padron_nominal')
+    async cargar_padron_nominal() {
+     await this.loaders.cargarPadronNominalRegional()
+        return 
+    {}
+    
+    }
+
+    
 }

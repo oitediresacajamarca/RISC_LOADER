@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { Console } from 'console';
 import { PuntoDigitacionHisminsa } from './interfaces/punto-digitacion-hisminsa.interface';
 const fs = require('fs')
 const fetch = require('node-fetch');
-const dot=require('dotenv').config()
+const dot = require('dotenv').config()
 
 @Injectable()
 export class LoaderService {
 
 
-    RUTA_CARGAR=process.env.RUTA
-
-
-
+    RUTA_CARGAR = process.env.RUTA
+    		
+PROVINCIAS=     [{"ID_PROVINCIA":"0601","ID_DEPARTAMENTO":"06","NOMBRE":"CAJAMARCA"},{"ID_PROVINCIA":"0602","ID_DEPARTAMENTO":"06","NOMBRE":"CAJABAMBA"},{"ID_PROVINCIA":"0603","ID_DEPARTAMENTO":"06","NOMBRE":"CELENDIN"},{"ID_PROVINCIA":"0604","ID_DEPARTAMENTO":"06","NOMBRE":"CHOTA"},{"ID_PROVINCIA":"0605","ID_DEPARTAMENTO":"06","NOMBRE":"CONTUMAZA"},{"ID_PROVINCIA":"0606","ID_DEPARTAMENTO":"06","NOMBRE":"CUTERVO"},{"ID_PROVINCIA":"0607","ID_DEPARTAMENTO":"06","NOMBRE":"HUALGAYOC"},{"ID_PROVINCIA":"0608","ID_DEPARTAMENTO":"06","NOMBRE":"JAEN"},{"ID_PROVINCIA":"0609","ID_DEPARTAMENTO":"06","NOMBRE":"SAN IGNACIO"},{"ID_PROVINCIA":"0610","ID_DEPARTAMENTO":"06","NOMBRE":"SAN MARCOS"},{"ID_PROVINCIA":"0611","ID_DEPARTAMENTO":"06","NOMBRE":"SAN MIGUEL"},{"ID_PROVINCIA":"0612","ID_DEPARTAMENTO":"06","NOMBRE":"SAN PABLO"},{"ID_PROVINCIA":"0613","ID_DEPARTAMENTO":"06","NOMBRE":"SANTA CRUZ"}]
     DescargarMaestropPersonalRegional() {
 
 
         let FECHAACTUAL = new Date()
         console.log(FECHAACTUAL.getFullYear() * 10000 + (FECHAACTUAL.getMonth() + 1) * 100 + FECHAACTUAL.getDate())
-        const dest = fs.createWriteStream(this.RUTA_CARGAR+'/TMP_MAESTROS/MAESTRO_PERSONAL/PERSONAL.csv');
+        const dest = fs.createWriteStream(this.RUTA_CARGAR + '/TMP_MAESTROS/MAESTRO_PERSONAL/PERSONAL.csv');
         fetch("https://wsalud.minsa.gob.pe/reporteshis/his/ExportarMaestroPersonal.aspx?parametro=-7---20201123-20201123-", {
             "headers": {
                 "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -52,27 +52,27 @@ export class LoaderService {
 
         let FECHAACTUAL = new Date()
         console.log(FECHAACTUAL.getFullYear() * 10000 + (FECHAACTUAL.getMonth() + 1) * 100 + FECHAACTUAL.getDate())
-        const dest = fs.createWriteStream(this.RUTA_CARGAR+'/TMP_MAESTROS/MAESTRO_REGISTRADOR/MAESTRO_REGISTRADOR.csv');
+        const dest = fs.createWriteStream(this.RUTA_CARGAR + '/TMP_MAESTROS/MAESTRO_REGISTRADOR/MAESTRO_REGISTRADOR.csv');
         fetch("https://wsalud.minsa.gob.pe/reporteshis/his/ExportarMaestroRegistrador.aspx?parametro=-7---20201205-20201205-", {
             "headers": {
-              "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-              "accept-language": "es-ES,es;q=0.9,en;q=0.8",
-              "cache-control": "no-cache",
-              "content-type": "application/x-www-form-urlencoded",
-              "pragma": "no-cache",
-              "sec-fetch-dest": "iframe",
-              "sec-fetch-mode": "navigate",
-              "sec-fetch-site": "same-origin",
-              "sec-fetch-user": "?1",
-              "upgrade-insecure-requests": "1",
-              "cookie": "_ga=GA1.3.2012850145.1568573608; __cfduid=d455db6626cff542e92e41f50bf3077e71604958158; ASP.NET_SessionId=lypr1jmssc5jdsqpuvwzljt5"
+                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "accept-language": "es-ES,es;q=0.9,en;q=0.8",
+                "cache-control": "no-cache",
+                "content-type": "application/x-www-form-urlencoded",
+                "pragma": "no-cache",
+                "sec-fetch-dest": "iframe",
+                "sec-fetch-mode": "navigate",
+                "sec-fetch-site": "same-origin",
+                "sec-fetch-user": "?1",
+                "upgrade-insecure-requests": "1",
+                "cookie": "_ga=GA1.3.2012850145.1568573608; __cfduid=d455db6626cff542e92e41f50bf3077e71604958158; ASP.NET_SessionId=lypr1jmssc5jdsqpuvwzljt5"
             },
             "referrer": "https://wsalud.minsa.gob.pe/reporteshis/his/ExportarMaestroRegistrador.aspx?parametro=-7---20201205-20201205-",
             "referrerPolicy": "strict-origin-when-cross-origin",
-            "body": "__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTEwNzU3MTUxNA9kFgICAw9kFgQCAw8PFgIeBFRleHQFGFRvdGFsIGRlIHJlZ2lzdHJvcyAxMzMxMmRkAgUPPCsAHAIADxYCHg9EYXRhU291cmNlQm91bmRnZBg8KwAGAQUUKwACZGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBQJndtfmdESoyUuJXSGLjBEOt8%2BoKm%2BT2fCtaGkx7YCjnD%2BI&__VIEWSTATEGENERATOR=C7FAB5EA&__EVENTVALIDATION=%2FwEdAAsEnHfIl7H4gpQXRErvWTHD60z594LnSzU4S6PQAbT3rq%2FpNZX4WBzijQTqPezGz2cPw6yb2%2B8wFVL9OLFMP7J7pAiCeLToo4O3HlO4yQxlIfvcNFoQPNiM7bg%2FOngY3P4BkA6huflNnawEEAJHB5G4AuunurLj5OiQui6dRwAtUPWzZLxWMw9LZCkW1r1wQWtVmqd7cYVwF0CgV957j5RekmEIlqWRw%2Bgtywck79wWELdk8%2FhKCfr1fKNtPbqe0OJNpUy6fn%2FetSNhWGaoCE0G&btnExportar=Exportar+a+Excel&gv%24DXSelInput=&gv%24DXKVInput=%5B%5D&gv%24CallbackState=BwMHAgIERGF0YQagBQAAAAAANAAAADQAAAAAAAAPAAAAAAcAAAAOSWRfUmVnaXN0cmFkb3IOSWRfUmVnaXN0cmFkb3IDAAARSWRfVGlwb19Eb2N1bWVudG8RSWRfVGlwb19Eb2N1bWVudG8DAAAQTnVtZXJvX0RvY3VtZW50bxBOdW1lcm9fRG9jdW1lbnRvBwAAHEFwZWxsaWRvX1BhdGVybm9fUmVnaXN0cmFkb3IcQXBlbGxpZG9fUGF0ZXJub19SZWdpc3RyYWRvcgcAABxBcGVsbGlkb19NYXRlcm5vX1JlZ2lzdHJhZG9yHEFwZWxsaWRvX01hdGVybm9fUmVnaXN0cmFkb3IHAAATTm9tYnJlc19SZWdpc3RyYWRvchNOb21icmVzX1JlZ2lzdHJhZG9yBwAAEEZlY2hhX05hY2ltaWVudG8QRmVjaGFfTmFjaW1pZW50bwcAAAAAAAAHAAcABwAHAAb%2F%2FwMGQBoDBwEHAgg0NTYxMzM3MgcCBkZMT1JFUwcCB1NBTEFaQVIHAghDQVJPTElOQQcCCjE5ODktMDEtMjYHAAcABv%2F%2FAwaoPAMHAQcCCDE2NzA4MTEyBwIJQ0VOVFVSSU9OBwIIQ09ST05BRE8HAg9ST0JFUlQgQlJJVEFMRE8HAgoxOTcxLTAxLTEyBwAHAAb%2F%2FwMG0kEDBwEHAgg0NDE5NTg4NQcCBkNISUxPTgcCBVJPSkFTBwIPTEFWRUlEWSBNRUxJU1NBBwIKMTk4Ny0wMS0yMQcABwAG%2F%2F8DBqZPAwcBBwIINDA3MDAyOTQHAgdWQVNRVUVaBwIITUFSVElORVoHAgxKQVZJRVIgT1lNRVIHAgoxOTgwLTA4LTI5BwAHAAb%2F%2FwMGD1oDBwEHAgg0NzgyMDMzNgcCBERJQVoHAgRESUFaBwIQQ1JJU1RJQU4gQUxGT05TTwcCCjE5ODktMDMtMDMHAAcABv%2F%2FAwWUOAEAAwcBBwIINDQ5NzU5MzUHAgZSSU9KQVMHAghDQVJSQU5aQQcCD0pFTklGRkVSIExPUkVOQQcCCjE5ODctMDUtMjgHAAcABv%2F%2FAwVhpQEAAwcBBwIINDA4OTgwMTEHAgVMT1BFWgcCCFNBTFZBRE9SBwIEQkFOSQcCCjE5ODEtMDMtMjEHAAcABv%2F%2FAwVGDQIAAwcBBwIINDY1NjI5MDAHAgZDSEFWRVoHAgdWQVNRVUVaBwILTFVaIEFNRVJJQ0EHAgoxOTg5LTA4LTAxBwAHAAb%2F%2FwMFaCMCAAMHAQcCCDA4ODY0OTAwBwIKVkFMRU5aVUVMQQcCBVRBUElBBwIGV0FMVEVSBwIKMTk1OS0wMS0xMgcABwAG%2F%2F8DBWHrAwADBwEHAgg3MTg5Njk1NwcCCVJPRFJJR1VFWgcCCkNBREVOSUxMQVMHAgVERUlTSQcCCjE5OTEtMTAtMTEHAAcABv%2F%2FAwXRDQUAAwcBBwIINDc2Mzg0OTMHAgdDT1JET1ZBBwIGVE9SUkVTBwIMSVNTQSBKSEFOSU5BBwIKMTk5MS0wOC0yOQcABwAG%2F%2F8DBcETBQADBwEHAgg0MTcxODIxNQcCBFRPUk8HAgZPQkFORE8HAhFBWlVDRU5BIFlBUVVFTElORQcCCjE5ODMtMDEtMDEHAAcABv%2F%2FAwU0IAUAAwcBBwIINDEyODU3NjEHAgdCUklOR0FTBwIHR1VJTExFTgcCDUtBUklOQSBZQU5FVEgHAgoxOTgyLTAyLTE1BwAHAAb%2F%2FwMFCiEFAAMHAQcCCDQyMzQ2MDYzBwIDUEFaBwIIQ0FSUklMTE8HAgtKQU1FUyBQQU9MSQcCCjE5ODQtMDMtMjAHAAcABv%2F%2FAwXTIwUAAwcBBwIINDA1MjI5OTEHAgZBQkFOVE8HAgdBTENBTERFBwIMUk9YQU5BIEpBTkVUBwIKMTk4MC0wMy0xNAIFU3RhdGUHUQcIBwACAQcBAgEHAgIBBwMCAQcEAgEHBQIBBwYCAQcHAgEHAAcABwAHAAIABQAAAIAJAgAHAAkCAAIAAwcEAgAHAAIBBgA0BwACAQcABwAHAAIIUGFnZVNpemUDBw8%3D&hdidsector=&hdiddisa=7&hdidred=&hdidmicrored=&hdidestablecimiento=&hdidpunto=&hdfecini="+FECHAACTUAL+"&hdfecfin="+FECHAACTUAL+"&DXScript=1_171%2C1_94%2C1_164%2C1_104%2C1_138%2C1_114%2C1_121%2C1_152&DXCss=0_3598%2C0_3741%2C1_12%2C0_3600%2C0_3745%2C0_3592%2C1_5%2C0_3594",
+            "body": "__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTEwNzU3MTUxNA9kFgICAw9kFgQCAw8PFgIeBFRleHQFGFRvdGFsIGRlIHJlZ2lzdHJvcyAxMzMxMmRkAgUPPCsAHAIADxYCHg9EYXRhU291cmNlQm91bmRnZBg8KwAGAQUUKwACZGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBQJndtfmdESoyUuJXSGLjBEOt8%2BoKm%2BT2fCtaGkx7YCjnD%2BI&__VIEWSTATEGENERATOR=C7FAB5EA&__EVENTVALIDATION=%2FwEdAAsEnHfIl7H4gpQXRErvWTHD60z594LnSzU4S6PQAbT3rq%2FpNZX4WBzijQTqPezGz2cPw6yb2%2B8wFVL9OLFMP7J7pAiCeLToo4O3HlO4yQxlIfvcNFoQPNiM7bg%2FOngY3P4BkA6huflNnawEEAJHB5G4AuunurLj5OiQui6dRwAtUPWzZLxWMw9LZCkW1r1wQWtVmqd7cYVwF0CgV957j5RekmEIlqWRw%2Bgtywck79wWELdk8%2FhKCfr1fKNtPbqe0OJNpUy6fn%2FetSNhWGaoCE0G&btnExportar=Exportar+a+Excel&gv%24DXSelInput=&gv%24DXKVInput=%5B%5D&gv%24CallbackState=BwMHAgIERGF0YQagBQAAAAAANAAAADQAAAAAAAAPAAAAAAcAAAAOSWRfUmVnaXN0cmFkb3IOSWRfUmVnaXN0cmFkb3IDAAARSWRfVGlwb19Eb2N1bWVudG8RSWRfVGlwb19Eb2N1bWVudG8DAAAQTnVtZXJvX0RvY3VtZW50bxBOdW1lcm9fRG9jdW1lbnRvBwAAHEFwZWxsaWRvX1BhdGVybm9fUmVnaXN0cmFkb3IcQXBlbGxpZG9fUGF0ZXJub19SZWdpc3RyYWRvcgcAABxBcGVsbGlkb19NYXRlcm5vX1JlZ2lzdHJhZG9yHEFwZWxsaWRvX01hdGVybm9fUmVnaXN0cmFkb3IHAAATTm9tYnJlc19SZWdpc3RyYWRvchNOb21icmVzX1JlZ2lzdHJhZG9yBwAAEEZlY2hhX05hY2ltaWVudG8QRmVjaGFfTmFjaW1pZW50bwcAAAAAAAAHAAcABwAHAAb%2F%2FwMGQBoDBwEHAgg0NTYxMzM3MgcCBkZMT1JFUwcCB1NBTEFaQVIHAghDQVJPTElOQQcCCjE5ODktMDEtMjYHAAcABv%2F%2FAwaoPAMHAQcCCDE2NzA4MTEyBwIJQ0VOVFVSSU9OBwIIQ09ST05BRE8HAg9ST0JFUlQgQlJJVEFMRE8HAgoxOTcxLTAxLTEyBwAHAAb%2F%2FwMG0kEDBwEHAgg0NDE5NTg4NQcCBkNISUxPTgcCBVJPSkFTBwIPTEFWRUlEWSBNRUxJU1NBBwIKMTk4Ny0wMS0yMQcABwAG%2F%2F8DBqZPAwcBBwIINDA3MDAyOTQHAgdWQVNRVUVaBwIITUFSVElORVoHAgxKQVZJRVIgT1lNRVIHAgoxOTgwLTA4LTI5BwAHAAb%2F%2FwMGD1oDBwEHAgg0NzgyMDMzNgcCBERJQVoHAgRESUFaBwIQQ1JJU1RJQU4gQUxGT05TTwcCCjE5ODktMDMtMDMHAAcABv%2F%2FAwWUOAEAAwcBBwIINDQ5NzU5MzUHAgZSSU9KQVMHAghDQVJSQU5aQQcCD0pFTklGRkVSIExPUkVOQQcCCjE5ODctMDUtMjgHAAcABv%2F%2FAwVhpQEAAwcBBwIINDA4OTgwMTEHAgVMT1BFWgcCCFNBTFZBRE9SBwIEQkFOSQcCCjE5ODEtMDMtMjEHAAcABv%2F%2FAwVGDQIAAwcBBwIINDY1NjI5MDAHAgZDSEFWRVoHAgdWQVNRVUVaBwILTFVaIEFNRVJJQ0EHAgoxOTg5LTA4LTAxBwAHAAb%2F%2FwMFaCMCAAMHAQcCCDA4ODY0OTAwBwIKVkFMRU5aVUVMQQcCBVRBUElBBwIGV0FMVEVSBwIKMTk1OS0wMS0xMgcABwAG%2F%2F8DBWHrAwADBwEHAgg3MTg5Njk1NwcCCVJPRFJJR1VFWgcCCkNBREVOSUxMQVMHAgVERUlTSQcCCjE5OTEtMTAtMTEHAAcABv%2F%2FAwXRDQUAAwcBBwIINDc2Mzg0OTMHAgdDT1JET1ZBBwIGVE9SUkVTBwIMSVNTQSBKSEFOSU5BBwIKMTk5MS0wOC0yOQcABwAG%2F%2F8DBcETBQADBwEHAgg0MTcxODIxNQcCBFRPUk8HAgZPQkFORE8HAhFBWlVDRU5BIFlBUVVFTElORQcCCjE5ODMtMDEtMDEHAAcABv%2F%2FAwU0IAUAAwcBBwIINDEyODU3NjEHAgdCUklOR0FTBwIHR1VJTExFTgcCDUtBUklOQSBZQU5FVEgHAgoxOTgyLTAyLTE1BwAHAAb%2F%2FwMFCiEFAAMHAQcCCDQyMzQ2MDYzBwIDUEFaBwIIQ0FSUklMTE8HAgtKQU1FUyBQQU9MSQcCCjE5ODQtMDMtMjAHAAcABv%2F%2FAwXTIwUAAwcBBwIINDA1MjI5OTEHAgZBQkFOVE8HAgdBTENBTERFBwIMUk9YQU5BIEpBTkVUBwIKMTk4MC0wMy0xNAIFU3RhdGUHUQcIBwACAQcBAgEHAgIBBwMCAQcEAgEHBQIBBwYCAQcHAgEHAAcABwAHAAIABQAAAIAJAgAHAAkCAAIAAwcEAgAHAAIBBgA0BwACAQcABwAHAAIIUGFnZVNpemUDBw8%3D&hdidsector=&hdiddisa=7&hdidred=&hdidmicrored=&hdidestablecimiento=&hdidpunto=&hdfecini=" + FECHAACTUAL + "&hdfecfin=" + FECHAACTUAL + "&DXScript=1_171%2C1_94%2C1_164%2C1_104%2C1_138%2C1_114%2C1_121%2C1_152&DXCss=0_3598%2C0_3741%2C1_12%2C0_3600%2C0_3745%2C0_3592%2C1_5%2C0_3594",
             "method": "POST",
             "mode": "cors"
-          }).then(res => {
+        }).then(res => {
             console.log('inicio')
             console.log(res)
             res.body.pipe(dest);
@@ -85,8 +85,8 @@ export class LoaderService {
 
 
     DescargarReportePlano(mes: number, anio: number, sector: number) {
-      
-        const rpt = fs.createWriteStream(this.RUTA_CARGAR+'/TMP_REPORTES_PLANOS/TMP_REPORTES_PLANOS/REPORTE_PLANO_' + mes + '_' + anio + '_' + sector + '.csv');
+
+        const rpt = fs.createWriteStream(this.RUTA_CARGAR + '/TMP_REPORTES_PLANOS/TMP_REPORTES_PLANOS/REPORTE_PLANO_' + mes + '_' + anio + '_' + sector + '.csv');
 
         let FECHA_INICIO_PERIODO = new Date()
 
@@ -94,7 +94,7 @@ export class LoaderService {
         FECHA_INICIO_PERIODO.setUTCMonth(mes - 1)
         FECHA_INICIO_PERIODO.setUTCFullYear(anio)
 
-     
+
         let FECHA_FIN_PERIODO = new Date()
         FECHA_FIN_PERIODO.setUTCMonth(FECHA_INICIO_PERIODO.getMonth() + 2)
         FECHA_FIN_PERIODO.setUTCDate(1)
@@ -102,7 +102,7 @@ export class LoaderService {
 
         FECHA_FIN_PERIODO.setUTCFullYear(anio)
 
-        if(mes==(new Date()).getMonth()+1){
+        if (mes == (new Date()).getMonth() + 1) {
             FECHA_FIN_PERIODO = new Date()
             FECHA_FIN_PERIODO.setUTCDate(FECHA_FIN_PERIODO.getUTCDate() - 1)
         }
@@ -110,8 +110,8 @@ export class LoaderService {
         let FECHA_INICIO_PERIODO_FORMAT = FECHA_INICIO_PERIODO.getUTCFullYear() * 10000 + (FECHA_INICIO_PERIODO.getUTCMonth() + 1) * 100 + FECHA_INICIO_PERIODO.getUTCDate()
         let FECHA_FIN_PERIODO_FORMAT = FECHA_FIN_PERIODO.getUTCFullYear() * 10000 + (FECHA_FIN_PERIODO.getUTCMonth() + 1) * 100 + FECHA_FIN_PERIODO.getUTCDate()
 
-        console.log(FECHA_INICIO_PERIODO_FORMAT+' hasta '+FECHA_FIN_PERIODO_FORMAT)
-    
+        console.log(FECHA_INICIO_PERIODO_FORMAT + ' hasta ' + FECHA_FIN_PERIODO_FORMAT)
+
 
 
         fetch("https://wsalud.minsa.gob.pe/reporteshis/his/NominalTramaNuevo.aspx?parametro=7-7-----20201123-20201123", {
@@ -193,7 +193,7 @@ export class LoaderService {
     async cargarMaestroPacientePuntoDigitacion(punto: PuntoDigitacionHisminsa, anio, mes) {
 
 
-        const rpt = fs.createWriteStream(this.RUTA_CARGAR+'/TMP_MAESTROS/MAESTRO_PACIENTE/MAESTRO_PACIENTE' + punto.idpunto + '.csv');
+        const rpt = fs.createWriteStream(this.RUTA_CARGAR + '/TMP_MAESTROS/MAESTRO_PACIENTE/MAESTRO_PACIENTE' + punto.idpunto + '.csv');
 
         let FECHA_INICIO_PERIODO = new Date()
 
@@ -259,6 +259,55 @@ export class LoaderService {
 
 
 
+    }
+
+
+    async cargarPadronNominalRegional() {
+
+this.PROVINCIAS.map(async (prov)=>{
+
+await this.cargarPadronNominalProvincia(prov.ID_PROVINCIA,prov.NOMBRE)
+
+
+})
+    }
+
+    async cargarPadronNominalProvincia(cod_prov:string,nombre_prov:string) {
+
+        const rpt = fs.createWriteStream( 'E:/DIRESA/Nominales/2ENERO2020/'+nombre_prov+'.xlsx');
+console.log(cod_prov)
+
+let url="https://padronnominal.reniec.gob.pe/padronn/reporte/padron_edad_xls.do?coUbigeo="+cod_prov+"&deEdad=0&hastaEdad=5&deUbigeo=CAJAMARCA,"+nombre_prov+"&feIni=01/01/2013&feFin=31/12/2020&tiRegFecha=T&esPadron=1"
+console.log(url)
+        fetch(url, {
+            "headers": {
+                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                "accept-language": "es-ES,es;q=0.9,en;q=0.8",
+                "cache-control": "no-cache",
+                "pragma": "no-cache",
+                "sec-ch-ua": "\"Google Chrome\";v=\"87\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"87\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-fetch-dest": "document",
+                "sec-fetch-mode": "navigate",
+                "sec-fetch-site": "same-origin",
+                "sec-fetch-user": "?1",
+                "upgrade-insecure-requests": "1",
+                "cookie": "JSESSIONID=8izFwQlE9lekSyFS72Hu_8ldiYPBYm__1IB-CLK9C-FEJ3D3g1mh!-1935698968"
+            },
+            "referrer": "https://padronnominal.reniec.gob.pe/padronn/",
+            "referrerPolicy": "strict-origin-when-cross-origin",
+            "body": null,
+            "method": "GET",
+            "mode": "cors"
+        }).then(res => {
+         
+
+            res.body.pipe(rpt);
+            console.log('termino')
+            return 1
+
+        })
+;
     }
 
 
