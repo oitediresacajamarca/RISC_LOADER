@@ -1,4 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { get } from 'http';
 import { LoaderService } from './loader.service';
 
 @Controller('loader')
@@ -8,8 +9,8 @@ export class LoaderController {
 
     }
     @Get('personal')
-    CargarPersonal() {
-        this.loaders.DescargarMaestropPersonalRegional()
+    async CargarPersonal() {
+        await this.loaders.DescargarMaestropPersonalRegional()
         return 'personal cargado'
 
     }
@@ -29,8 +30,9 @@ export class LoaderController {
 
     @Get('reporte_plano/:anio/:mes')
     CargarReportePlanoPeriodo(@Param('anio') anio: number, @Param('mes') mes: number) {
-        this.loaders.DescargarReportePlano(mes, anio,7)
+
         this.loaders.DescargarReportePlano(mes, anio,2)
+       this.loaders.DescargarReportePlano(mes, anio,7)
         this.loaders.DescargarReportePlano(mes, anio,5)
         this.loaders.DescargarReportePlano(mes, anio,8)
         return 'personal cargado'
@@ -38,13 +40,13 @@ export class LoaderController {
     }
 
     @Get('reporte_plano/:anio')
-    CargarReportePlanoAnual(@Param('anio') anio: number) {
+    async CargarReportePlanoAnual(@Param('anio') anio: number) {
         let mes = 1
-        while (mes <= 12) {
-            this.loaders.DescargarReportePlano(mes, anio,2)
-            this.loaders.DescargarReportePlano(mes, anio,5)
-            this.loaders.DescargarReportePlano(mes, anio,7)
-            this.loaders.DescargarReportePlano(mes, anio,8)
+        while (mes <= 3) {
+          await  this.loaders.DescargarReportePlano(mes, anio,2)
+          await  this.loaders.DescargarReportePlano(mes, anio,5)
+          await   this.loaders.DescargarReportePlano(mes, anio,7)
+          await   this.loaders.DescargarReportePlano(mes, anio,8)
 
             mes = mes + 1
         }
@@ -55,7 +57,7 @@ export class LoaderController {
 
     @Get('PuntosDigitacionHis')
     async CargarPuntosDigitacionHisMinsa() {
-        const res= await this.loaders.CargarPuntosDigitacionHisMinsa()
+        const res= await this.loaders.CargarPuntosDigitacionHisMinsa(7)
         return res
 
     }
@@ -70,7 +72,7 @@ export class LoaderController {
     
     @Get('listar_puntos')
     async ListarPuntosDigitacion() {
-        let res:any[]= await this.loaders.CargarPuntosDigitacionHisMinsa()
+        let res:any[]= await this.loaders.CargarPuntosDigitacionHisMinsa(7)
         return {cantidad:res.length}
 
     }
@@ -81,6 +83,24 @@ export class LoaderController {
         return 
     {}
     
+    }
+
+    @Get('peru')
+    async cargar_padron_nominal_peru() {
+     await this.loaders.cargarPacientesPeru()
+        return 
+    {}
+    
+    }
+
+    @Get('u')
+    async cambiarUser(){
+      await  this.loaders.cambiarUsuario()
+    }
+
+    @Get('baja')
+    async cambiarRegionUser(){
+      await  this.loaders.darBaja()
     }
 
     
