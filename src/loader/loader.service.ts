@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Console } from 'console';
+import { MaestroEstablecimientoRepository } from 'src/maestros/establecimientos/maestro-establecimiento.repository';
 import { PuntoDigitacionHisminsa } from './interfaces/punto-digitacion-hisminsa.interface';
 const fs = require('fs')
 const fetch = require('node-fetch');
@@ -7,7 +8,7 @@ const dot = require('dotenv').config()
 
 @Injectable()
 export class LoaderService {
-
+constructor(private disas:MaestroEstablecimientoRepository){}
 
     RUTA_CARGAR = process.env.RUTA
     		
@@ -201,7 +202,7 @@ PROVINCIAS=     [{"ID_PROVINCIA":"0601","ID_DEPARTAMENTO":"06","NOMBRE":"CAJAMAR
     async cargarMaestroPacientePuntoDigitacion(punto: PuntoDigitacionHisminsa, anio, mes,disa) {
 
 
-        const rpt = fs.createWriteStream(this.RUTA_CARGAR + '/TMP_MAESTROS/MAESTRO_PACIENTE/MAESTRO_PACIENTE' + punto.idpunto +'-'+ punto.seccodigo+'.csv');
+        const rpt = fs.createWriteStream(this.RUTA_CARGAR + '/TMP_MAESTROS/MAESTRO_PACIENTE/MAESTRO_PACIENTE' +'-'+disa+'-'+ punto.idpunto +'-'+ punto.seccodigo+'.csv');
 
         let FECHA_INICIO_PERIODO = new Date()
 
@@ -284,10 +285,10 @@ await this.cargarPadronNominalProvincia(prov.ID_PROVINCIA,prov.NOMBRE)
 
 
 
-        const rpt = fs.createWriteStream( 'E:/DIRESA/Nominales/1ABRIL2021/'+nombre_prov+'.xlsx');
+        const rpt = fs.createWriteStream( 'E:/DIRESA/Nominales/23ABRIL/'+nombre_prov+'.xlsx');
 console.log(cod_prov)
 
-let url="https://padronnominal.reniec.gob.pe/padronn/reporte/padron_edad_xls.do?coUbigeo="+cod_prov+"&deEdad=0&hastaEdad=5&deUbigeo=CAJAMARCA,"+nombre_prov+"&feIni=01/01/2013&feFin=31/03/2021&tiRegFecha=T&esPadron=1"
+let url="https://padronnominal.reniec.gob.pe/padronn/reporte/padron_edad_xls.do?coUbigeo="+cod_prov+"&deEdad=0&hastaEdad=5&deUbigeo=CAJAMARCA,"+nombre_prov+"&feIni=01/01/2013&feFin=23/04/2021&tiRegFecha=T&esPadron=1"
 console.log(url)
         fetch(url, {
             "headers": {
@@ -302,7 +303,7 @@ console.log(url)
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
                 "upgrade-insecure-requests": "1",
-                "cookie": "JSESSIONID=5yOdpm6X7KIZZ3oHNn_Q2eusiIBRbh0UPwB_PJsaODQs5L8sfbFu!-1296001877"
+                "cookie": "JSESSIONID=ihIAuRqMMyh0BYkzQ0ISErBl9AuBr6ZBm_u-Ocw-PRtrOZBcdOFl!-260957526"
             },
             "referrer": "https://padronnominal.reniec.gob.pe/padronn/",
             "referrerPolicy": "strict-origin-when-cross-origin",
@@ -326,14 +327,28 @@ console.log(res);
 
 
     async cargarPacientesPeru(){
-    let puntos: PuntoDigitacionHisminsa[] = await this.CargarPuntosDigitacionHisMinsa(18)
 
-        puntos.map((punto) => {
+let dis:any[]=[0,23,29,15,3,32,26,35,27,21,7,1,24,18,30,4,1,25,36,13,5,22,33,2,17,34,11,28,14,8]
+dis.map(async (disa)=>{
 
-            this.cargarMaestroPacientePuntoDigitacion(punto, 2020, 1,18)
+    let puntos: PuntoDigitacionHisminsa[] = await this.CargarPuntosDigitacionHisMinsa(disa)
+
+    puntos.map((punto) => {
+
+        this.cargarMaestroPacientePuntoDigitacion(punto, 2020, 1,disa)
 
 
-        })
+    })
+
+
+
+})
+
+
+
+
+
+    
 
 }
 

@@ -29,5 +29,22 @@ constructor(private inmuns:InmunoService){
   let   rest =  await   this.inmuns.descargarVacCovidPeriodo(anio,mes)
         return rest
     }
+    @Get('consultar/:num_doc')
+    async devolverVacunciones(@Param('num_doc') num_doc:string)
+    {
+
+    let resp=await    this.inmuns.consultarDni(num_doc)
+    return resp
+
+    }
+
+    @Get('consultar/:anio/:mes/:dia')
+    async devolverVacuncionesDia(@Param() param:any)
+    {
+
+    let resp=await    this.inmuns.devolverVacunaCovidDia(param.anio,param.mes,param.dia)
+    return resp
+
+    }
 
 }
