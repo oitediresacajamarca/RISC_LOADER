@@ -31,6 +31,9 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
+    "stream-chain": "^2.2.4",
+    "stream-csv-as-json": "^1.0.4",
+    "stream-json": "^1.7.1",
     "typeorm": "^0.2.32"
   },
   "devDependencies": {
