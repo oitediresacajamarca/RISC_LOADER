@@ -14,8 +14,8 @@ export class InmunoController {
     }
     @Get('covid')
     async devolverVacunaCovid() {
-        await this.inmuns.descargarVacCovid()
-        return 'datito'
+      let resp=  await this.inmuns.descargarVacCovid()
+        return {"mensaje":resp}
     }
     @Get('ver')
     async devolverVac() {
