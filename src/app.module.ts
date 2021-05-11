@@ -19,6 +19,7 @@ import { EstablecimientosModule } from './maestros/establecimientos/establecimie
       database: 'risc_2030',
       entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: false,
+      options: { encrypt:false }
     }),
     EstablecimientosModule],
   controllers: [AppController],
