@@ -285,10 +285,10 @@ await this.cargarPadronNominalProvincia(prov.ID_PROVINCIA,prov.NOMBRE)
 
 
 
-        const rpt = fs.createWriteStream( 'E:/DIRESA/Nominales/23ABRIL/'+nombre_prov+'.xlsx');
+        const rpt = fs.createWriteStream( 'E:/DIRESA/Nominales/9MAYO2021/OBSERVADOS/'+nombre_prov+'.xlsx');
 console.log(cod_prov)
 
-let url="https://padronnominal.reniec.gob.pe/padronn/reporte/padron_edad_xls.do?coUbigeo="+cod_prov+"&deEdad=0&hastaEdad=5&deUbigeo=CAJAMARCA,"+nombre_prov+"&feIni=01/01/2013&feFin=23/04/2021&tiRegFecha=T&esPadron=1"
+let url="https://padronnominal.reniec.gob.pe/padronn/reporte/padron_edad_xls.do?coUbigeo="+cod_prov+"&deEdad=0&hastaEdad=5&deUbigeo=CAJAMARCA,"+nombre_prov+"&feIni=01/01/2013&feFin=30/04/2021&tiRegFecha=T&esPadron=2"
 console.log(url)
         fetch(url, {
             "headers": {
@@ -303,7 +303,7 @@ console.log(url)
                 "sec-fetch-site": "same-origin",
                 "sec-fetch-user": "?1",
                 "upgrade-insecure-requests": "1",
-                "cookie": "JSESSIONID=ihIAuRqMMyh0BYkzQ0ISErBl9AuBr6ZBm_u-Ocw-PRtrOZBcdOFl!-260957526"
+                "cookie": "JSESSIONID=m-9T0bKTtBcIy0Ub26GD7ny0nJpLivFi592jagiURKtYmkQgafFy!1331204936"
             },
             "referrer": "https://padronnominal.reniec.gob.pe/padronn/",
             "referrerPolicy": "strict-origin-when-cross-origin",
