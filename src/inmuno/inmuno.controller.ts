@@ -17,6 +17,18 @@ export class InmunoController {
       let resp=  await this.inmuns.descargarVacCovid()
         return {"mensaje":resp}
     }
+    @Get('covid_nacional')
+    async devolverVacunaCovidNacional() {
+
+        let dis:any[]=[0,23,29,15,3,32,26,35,27,21,7,1,24,18,30,4,1,25,36,13,5,22,33,2,17,34,11,28,14,8]
+        dis.map(async disita=>{
+
+            console.log(disita)
+            let resp=  await this.inmuns.descargarVacCovidDisa(disita)
+        })
+     
+        return {"mensaje":''}
+    }
     @Get('ver')
     async devolverVac() {
         let rest = await this.inmuns.VER()

@@ -42,7 +42,7 @@ export class LoaderController {
     @Get('reporte_plano/:anio')
     async CargarReportePlanoAnual(@Param('anio') anio: number) {
         let mes = 1
-        while (mes <= 3) {
+        while (mes <= 5) {
           await  this.loaders.DescargarReportePlano(mes, anio,2)
           await  this.loaders.DescargarReportePlano(mes, anio,5)
           await   this.loaders.DescargarReportePlano(mes, anio,7)
