@@ -20,7 +20,7 @@ export class InmunoController {
     @Get('covid_nacional')
     async devolverVacunaCovidNacional() {
 
-        let dis:any[]=[0,23,29,15,3,32,26,35,27,21,7,1,24,18,30,4,1,25,36,13,5,22,33,2,17,34,11,28,14,8]
+        let dis:any[]=[8,14,28,11,34,17,2,33,,22,5,13,36,25,19,4,30,18,24,1,7,21,27,35,26,32,3,15,29,23 ]
         dis.map(async disita=>{
 
             console.log(disita)
